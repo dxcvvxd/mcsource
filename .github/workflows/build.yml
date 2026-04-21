@@ -9,11 +9,10 @@ jobs:
       - uses: gradle/actions/wrapper-validation@v6
       - uses: actions/setup-java@v5
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'microsoft'
       - run: chmod +x ./gradlew
       - run: ./gradlew genSources
-      - run: find ~/.gradle -name "*sources*.jar" -path "*minecraft*" 2>/dev/null | head -1
       - id: find-sources
         run: |
           jar=$(find ~/.gradle -name "*sources*.jar" -path "*minecraft*" 2>/dev/null | head -1)
