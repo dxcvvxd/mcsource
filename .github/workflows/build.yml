@@ -13,8 +13,12 @@ jobs:
           distribution: 'microsoft'
       - run: chmod +x ./gradlew
       - run: ./gradlew genSources
-      - run: ./gradlew build
+      - run: find ~/.gradle -name "*sources*.jar" -path "*minecraft*" 2>/dev/null | head -1
+      - id: find-sources
+        run: |
+          jar=$(find ~/.gradle -name "*sources*.jar" -path "*minecraft*" 2>/dev/null | head -1)
+          echo "jar=$jar" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v7
         with:
-          name: Artifacts
-          path: build/libs/
+          name: Minecraft Sources
+          path: ${{ steps.find-sources.outputs.jar }}
